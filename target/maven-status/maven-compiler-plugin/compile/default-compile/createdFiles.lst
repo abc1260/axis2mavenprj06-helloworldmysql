@@ -1,0 +1,4 @@
+com/aikiinc/axis2/hello/pojo/Hello.class
+com/aikiinc/axis2/mysql/DBConnection.class
+com/aikiinc/axis2/hello/service/HelloMySqlService.class
+com/aikiinc/axis2/hello/HelloWorld.class

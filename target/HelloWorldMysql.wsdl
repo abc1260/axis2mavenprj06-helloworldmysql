@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://service.hello.axis2.aikiinc.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://service.hello.axis2.aikiinc.com">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://service.hello.axis2.aikiinc.com">
+            <xs:element name="message">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="msg" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="messageResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="messageRequest">
+        <wsdl:part name="parameters" element="ns:message"/>
+    </wsdl:message>
+    <wsdl:message name="messageResponse">
+        <wsdl:part name="parameters" element="ns:messageResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="HelloMySqlServicePortType">
+        <wsdl:operation name="message">
+            <wsdl:input message="ns:messageRequest" wsaw:Action="urn:message"/>
+            <wsdl:output message="ns:messageResponse" wsaw:Action="urn:messageResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="HelloMySqlServiceSoap11Binding" type="ns:HelloMySqlServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="message">
+            <soap:operation soapAction="urn:message" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="HelloMySqlServiceSoap12Binding" type="ns:HelloMySqlServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="message">
+            <soap12:operation soapAction="urn:message" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="HelloMySqlServiceHttpBinding" type="ns:HelloMySqlServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="message">
+            <http:operation location="message"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="HelloMySqlService">
+        <wsdl:port name="HelloMySqlServiceHttpSoap11Endpoint" binding="ns:HelloMySqlServiceSoap11Binding">
+            <soap:address location="http://localhost:8080/axis2/services/HelloMySqlService"/>
+        </wsdl:port>
+        <wsdl:port name="HelloMySqlServiceHttpSoap12Endpoint" binding="ns:HelloMySqlServiceSoap12Binding">
+            <soap12:address location="http://localhost:8080/axis2/services/HelloMySqlService"/>
+        </wsdl:port>
+        <wsdl:port name="HelloMySqlServiceHttpEndpoint" binding="ns:HelloMySqlServiceHttpBinding">
+            <http:address location="http://localhost:8080/axis2/services/HelloMySqlService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
